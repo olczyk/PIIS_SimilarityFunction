@@ -37,3 +37,35 @@ FeatureId | FeatureName | FeatureDescription
 23 | VisualEffectsIds | Ids of people from movie Visual Effects department separated by the "/".
 
 Their values have been taken from [The Movie Database (TMDb)](https://www.themoviedb.org/) using [WatTMDb](http://wattmdb.codeplex.com/) API wrapper library.
+
+Algorithm
+=======================
+**1. The similarity rate for each separate feature is calculated.**
+   
+  Features can be grouped basing on the algorithms used for calculating the similarity rates for those features:
+  * **CollectionId**
+  
+    If both movies belongs to the same collection or the don't belong to any collection, the similarity rate equals 1.  
+    If they belong to different collections, the similarity rate equals 0.5.  
+    If one of them belongs to some collection and the second one doesn't belong to any, the similarity rate equals 0.
+
+  * **Budget, Popularity, ReleaseDate, Revenue, Runtime, VoteAverage, VoteCount**
+  
+    The following equation is used for calculating similarity rate for those features:
+
+    `similarityRate = 1 - (Math.abs(x - y)/(max - min))`
+    
+    where:  
+    _x_ - feature value of the first movie  
+    _y_ - feature value of the second movie  
+    _min_ - smallest feature value from the whole set of movies  
+    _max_ - biggest feature value from the whole set of movies  
+  
+  * **GenresIds, ProductionCompaniesIds, ProductionCountriesIso, SpokenLanguagesIso, CastIds, Costume&Make-UpIds, DirectingIds, CameraIds, EditingIds, ProductionIds, SoundIds, WritingIds, ArtIds, CrewIds, VisualEffectsIds**
+  
+    Feature sets of the two movies are compared in order to check how many of its elements are the same. The similarity rate is calculated using the following formula:
+
+    `similarityRate = numberOfMathingElements / maxPossibleMatches`
+
+
+_The rest not implemented yet_
