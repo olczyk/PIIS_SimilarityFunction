@@ -3,6 +3,54 @@ import java.util.ArrayList;
 
 public class Comparator {
 	
+	static final int collectionWeight = 10;
+	static final int budgetWeight = 4;
+	static final int genresWeight = 9;
+	static final int popularityWeight = 5;
+	static final int productionCompaniesWeight = 5;
+	static final int productionCountriesWeight = 6;
+	static final int releaseDateWeight = 7;
+	static final int revenueWeight = 5;
+	static final int runtimeWeight = 2;
+	static final int spokenLanguagesWeight = 8;
+	static final int voteAverageWeight = 5;
+	static final int voteCountWeight = 4;
+	static final int castWeight = 9;
+	static final int costumeMakeUpWeight = 3;
+	static final int directingWeight = 9;
+	static final int cameraWeight = 4;
+	static final int editingWeight = 2;
+	static final int productionWeight = 4;
+	static final int soundWeight = 2;
+	static final int writingWeight = 6;
+	static final int artWeight = 2;
+	static final int crewWeight = 1;
+	static final int visualEffectsWeight = 3;
+	
+	double collectionSimilarityRate;
+	double budgetSimilarityRate;
+	double genresSimilarityRate;
+	double popularitySimilarityRate;
+	double productionCompaniesSimilarityRate;
+	double productionCountriesSimilarityRate;
+	double releaseDateSimilarityRate;
+	double revenueSimilarityRate;
+	double runtimeSimilarityRate;
+	double spokenLanguagesSimilarityRate;
+	double voteAverageSimilarityRate;
+	double voteCountSimilarityRate;
+	double castSimilarityRate;
+	double costumeMakeUpSimilarityRate;
+	double directingSimilarityRate;
+	double cameraSimilarityRate;
+	double editingSimilarityRate;
+	double productionSimilarityRate;
+	double soundSimilarityRate;
+	double writingSimilarityRate;
+	double artSimilarityRate;
+	double crewSimilarityRate;
+	double visualEffectsSimilarityRate;
+    
 	Movie movie1;
 	Movie movie2;
 	
@@ -62,7 +110,93 @@ public class Comparator {
 	    this.minVoteCount = GetMinVoteCount();
 	}
 	
-	public double GetSimilarityRateForCollection()
+	public double GetMoviesSimilarityRate()
+	{
+		CalculateSimilarityRatesForSeparateFeatures();
+
+		double similarityRate = (
+				collectionWeight * collectionSimilarityRate + 
+				budgetWeight * budgetSimilarityRate + 
+				genresWeight * genresSimilarityRate + 
+				popularityWeight * popularitySimilarityRate +
+				productionCompaniesWeight * productionCompaniesSimilarityRate + 
+				productionCountriesWeight * productionCountriesSimilarityRate + 
+				releaseDateWeight * releaseDateSimilarityRate +
+				revenueWeight * revenueSimilarityRate + 
+				runtimeWeight * runtimeSimilarityRate + 
+				spokenLanguagesWeight * spokenLanguagesSimilarityRate + 
+				voteAverageWeight * voteAverageSimilarityRate +
+				voteCountWeight * voteCountSimilarityRate + 
+				castWeight * castSimilarityRate + 
+				costumeMakeUpWeight * costumeMakeUpSimilarityRate + 
+				directingWeight * directingSimilarityRate +
+				cameraWeight * cameraSimilarityRate + 
+				editingWeight * editingSimilarityRate + 
+				productionWeight * productionSimilarityRate + 
+				soundWeight * soundSimilarityRate +
+				writingWeight * writingSimilarityRate + 
+				artWeight * artSimilarityRate + 
+				crewWeight * crewSimilarityRate + 
+				visualEffectsWeight * visualEffectsSimilarityRate
+				)/(
+				collectionWeight + 
+				budgetWeight + 
+				genresWeight + 
+				popularityWeight + 
+				productionCompaniesWeight + 
+				productionCountriesWeight + 
+				releaseDateWeight + 
+				revenueWeight + 
+				runtimeWeight +
+				spokenLanguagesWeight + 
+				voteAverageWeight +
+				voteCountWeight + 
+				castWeight +
+				costumeMakeUpWeight +
+				directingWeight +
+				cameraWeight +
+				editingWeight +
+				productionWeight +
+				soundWeight +
+				writingWeight +
+				artWeight +
+				crewWeight +
+				visualEffectsWeight
+				); //weighted average
+		
+		System.out.println("************** MOVIES SIMILARTY RATE **************");
+		System.out.println("Similarity rate = " + similarityRate);
+		return similarityRate;
+	}
+	
+	private void CalculateSimilarityRatesForSeparateFeatures()
+	{
+		collectionSimilarityRate = GetSimilarityRateForCollection();
+		budgetSimilarityRate = GetSimilarityRateForBudget();
+		genresSimilarityRate = GetSimilarityRateForGenre();
+		popularitySimilarityRate = GetSimilarityRateForPopularity();
+		productionCompaniesSimilarityRate = GetSimilarityRateForProductionCompanies();
+		productionCountriesSimilarityRate = GetSimilarityRateForProductionCountries();
+		releaseDateSimilarityRate = GetSimilarityRateForReleaseDate();
+		revenueSimilarityRate = GetSimilarityRateForRevenue();
+		runtimeSimilarityRate = GetSimilarityRateForRuntime();
+		spokenLanguagesSimilarityRate = GetSimilarityRateForSpokenLanguages();
+		voteAverageSimilarityRate = GetSimilarityRateForVoteAverage();
+		voteCountSimilarityRate = GetSimilarityRateForVoteCount();
+		castSimilarityRate = GetSimilarityRateForCast();
+		costumeMakeUpSimilarityRate = GetSimilarityRateForCostumeMakeUp();
+		directingSimilarityRate = GetSimilarityRateForDirecting();
+		cameraSimilarityRate = GetSimilarityRateForCamera();
+		editingSimilarityRate = GetSimilarityRateForEditing();
+		productionSimilarityRate = GetSimilarityRateForProduction();
+		soundSimilarityRate = GetSimilarityRateForSound();
+		writingSimilarityRate = GetSimilarityRateForWriting();
+		artSimilarityRate = GetSimilarityRateForArt();
+		crewSimilarityRate = GetSimilarityRateForCrew();
+		visualEffectsSimilarityRate = GetSimilarityRateForVisualEffects();
+	}
+	
+	private double GetSimilarityRateForCollection()
 	{
 		double similarityRate = 0;
 		
@@ -78,196 +212,206 @@ public class Comparator {
 		{
 			similarityRate = 0;
 		}
-		
-		System.out.println("Collection similarity = " + similarityRate);
+
+		PrintSeparateFeatureResult(movie1.collectionId, movie2.collectionId, similarityRate, "COLLECTION");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForBudget()
+	private double GetSimilarityRateForBudget()
 	{
 		double similarityRate = calculateNumbersSimilarity(movie1.budget, movie2.budget, minBudgetInSet, maxBudgetInSet);
 		
-		System.out.println("Budget similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.budget, movie2.budget, similarityRate, "BUDGET");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForGenre() //TODO more sophisticated way, e.g. thriller is similar to action movie
+	private double GetSimilarityRateForGenre() //TODO more sophisticated way, e.g. thriller is similar to action movie
 	{
 		double similarityRate = calculateTwoSetsSimilarity(movie1.genresIds, movie2.genresIds);
 		
-		System.out.println("Genre similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.genresIds, movie2.genresIds, similarityRate, "GENRE");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForPopularity()
+	private double GetSimilarityRateForPopularity()
 	{
 		double similarityRate = calculateNumbersSimilarity(movie1.popularity, movie2.popularity, minPopularityInSet, maxPopularityInSet);
 		
+		PrintSeparateFeatureResult(movie1.popularity, movie2.popularity, similarityRate, "POPULARITY");
+		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForProductionCompanies()
+	private double GetSimilarityRateForProductionCompanies()
 	{
 		double similarityRate = calculateTwoSetsSimilarity(movie1.productionCompaniesIds, movie2.productionCompaniesIds);
 		
-		System.out.println("Production companies similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.productionCompaniesIds, movie2.productionCompaniesIds, similarityRate, "PRODUCTION COMPANIES");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForProductionCountries()
+	private double GetSimilarityRateForProductionCountries()
 	{
 		double similarityRate = calculateTwoSetsSimilarity(movie1.productionCountriesIso, movie2.productionCountriesIso);
 		
-		System.out.println("Production countries similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.productionCountriesIso, movie2.productionCountriesIso, similarityRate, "PRODUCTION COUNTRIES");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForReleaseDate() //TODO more sophisticated way, e.g. division for decades 60s, 70s, 80s, 90s etc.
+	private double GetSimilarityRateForReleaseDate() //TODO more sophisticated way, e.g. division for decades 60s, 70s, 80s, 90s etc.
 	{
 		double similarityRate = calculateNumbersSimilarity(movie1.releaseDate, movie2.releaseDate, minReleaseDateInSet, maxReleaseDateInSet);
 		
-		System.out.println("Release date similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.releaseDate, movie2.releaseDate, similarityRate, "RELEASE DATE");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForRevenue()
+	private double GetSimilarityRateForRevenue()
 	{
 		double similarityRate = calculateNumbersSimilarity(movie1.revenue, movie2.revenue, minRevenue, maxRevenue);
 		
+		PrintSeparateFeatureResult(movie1.revenue, movie2.revenue, similarityRate, "REVENUE");
+		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForRuntime()
+	private double GetSimilarityRateForRuntime()
 	{
 		double similarityRate = calculateNumbersSimilarity(movie1.runtime, movie2.runtime, minRuntime, maxRuntime);
 		
+		PrintSeparateFeatureResult(movie1.runtime, movie2.runtime, similarityRate, "RUNTIME");
+		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForSpokenLanguages()
+	private double GetSimilarityRateForSpokenLanguages()
 	{
 		double similarityRate = calculateTwoSetsSimilarity(movie1.spokenLanguagesIso, movie2.spokenLanguagesIso);
 		
-		System.out.println("Spoken language similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.spokenLanguagesIso, movie2.spokenLanguagesIso, similarityRate, "SPOKEN LANGUAGES");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForVoteAverage()
+	private double GetSimilarityRateForVoteAverage()
 	{
 		double similarityRate = calculateNumbersSimilarity(movie1.voteAverage, movie2.voteAverage, minVoteAverage, maxVoteAverage);
 		
+		PrintSeparateFeatureResult(movie1.voteAverage, movie2.voteAverage, similarityRate, "VOTE AVERAGE");
+		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForVoteCount()
+	private double GetSimilarityRateForVoteCount()
 	{
 		double similarityRate = calculateNumbersSimilarity(movie1.voteCount, movie2.voteCount, minVoteCount, maxVoteCount);
 		
+		PrintSeparateFeatureResult(movie1.voteCount, movie2.voteCount, similarityRate, "VOTE COUNT");
+		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForCast() //probably it will have quite a high weight
+	private double GetSimilarityRateForCast()
 	{
 		double similarityRate = calculateTwoSetsSimilarity(movie1.castIds, movie2.castIds);
 		
-		System.out.println("Cast similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.castIds, movie2.castIds, similarityRate, "CAST");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForCostumeMakeUp()
+	private double GetSimilarityRateForCostumeMakeUp()
 	{
 		double similarityRate = calculateTwoSetsSimilarity(movie1.costumeMakeUpIds, movie2.costumeMakeUpIds);
 		
-		System.out.println("Costume & Make-Up similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.costumeMakeUpIds, movie2.costumeMakeUpIds, similarityRate, "COSTUME & MAKE-UP");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForDirecting()
+	private double GetSimilarityRateForDirecting()
 	{
 		double similarityRate = calculateTwoSetsSimilarity(movie1.directingIds, movie2.directingIds);
 		
-		System.out.println("Directing similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.directingIds, movie2.directingIds, similarityRate, "DIRECTING");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForCamera()
+	private double GetSimilarityRateForCamera()
 	{
 		double similarityRate = calculateTwoSetsSimilarity(movie1.cameraIds, movie2.cameraIds);
 		
-		System.out.println("Camera similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.cameraIds, movie2.cameraIds, similarityRate, "CAMERA");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForEditing()
+	private double GetSimilarityRateForEditing()
 	{
 		double similarityRate = calculateTwoSetsSimilarity(movie1.editingIds, movie2.editingIds);
 		
-		System.out.println("Editing similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.editingIds, movie2.editingIds, similarityRate, "EDITING");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForProduction()
+	private double GetSimilarityRateForProduction()
 	{
 		double similarityRate = calculateTwoSetsSimilarity(movie1.productionIds, movie2.productionIds);
 		
-		System.out.println("Production similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.productionIds, movie2.productionIds, similarityRate, "PRODUCTION");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForSound()
+	private double GetSimilarityRateForSound()
 	{
 		double similarityRate = calculateTwoSetsSimilarity(movie1.soundIds, movie2.soundIds);
 		
-		System.out.println("Sound similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.soundIds, movie2.soundIds, similarityRate, "SOUND");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForWriting()
+	private double GetSimilarityRateForWriting()
 	{
 		double similarityRate = calculateTwoSetsSimilarity(movie1.writingIds, movie2.writingIds);
 		
-		System.out.println("Writing similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.writingIds, movie2.writingIds, similarityRate, "WRITING");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForArt()
+	private double GetSimilarityRateForArt()
 	{
 		double similarityRate = calculateTwoSetsSimilarity(movie1.artIds, movie2.artIds);
 		
-		System.out.println("Art similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.artIds, movie2.artIds, similarityRate, "ART");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForCrew()
+	private double GetSimilarityRateForCrew()
 	{
 		double similarityRate = calculateTwoSetsSimilarity(movie1.crewIds, movie2.crewIds);
 		
-		System.out.println("Crew similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.crewIds, movie2.crewIds, similarityRate, "CREW");
 		
 		return similarityRate;
 	}
 	
-	public double GetSimilarityRateForVisualEffects()
+	private double GetSimilarityRateForVisualEffects()
 	{
 		double similarityRate = calculateTwoSetsSimilarity(movie1.visualEffectsIds, movie2.visualEffectsIds);
 		
-		System.out.println("Visual effects similarity = " + similarityRate);
+		PrintSeparateFeatureResult(movie1.visualEffectsIds, movie2.visualEffectsIds, similarityRate, "VISUAL EFFECTS");
 		
 		return similarityRate;
 	}
@@ -285,6 +429,7 @@ public class Comparator {
 				maxBudget = Movies.get(i).budget;
 			}
 		}
+		System.out.println("Max budget in set = " + maxBudget);
 		return maxBudget;
 	}
 	
@@ -294,11 +439,12 @@ public class Comparator {
 		
 		for(int i=0; i<Movies.size(); i++)
 		{
-			if(minBudget > Movies.get(i).budget)
+			if(minBudget > Movies.get(i).budget && Movies.get(i).budget > 0) //to avoid wrong results caused by no information about the feature value. Observed that some movies have budget=0 which is not possible.
 			{
 				minBudget = Movies.get(i).budget;
 			}
 		}
+		System.out.println("Min budget in set = " + minBudget);
 		return minBudget;
 	}
 	
@@ -313,6 +459,7 @@ public class Comparator {
 				maxPopularity = Movies.get(i).popularity;
 			}
 		}
+		System.out.println("Max popularity in set = " + maxPopularity);
 		return maxPopularity;
 	}
 	
@@ -327,6 +474,7 @@ public class Comparator {
 				minPopularity = Movies.get(i).popularity;
 			}
 		}
+		System.out.println("Min popularity in set = " + minPopularity);
 		return minPopularity;
 	}
 	
@@ -341,6 +489,7 @@ public class Comparator {
 				maxReleaseDate = Movies.get(i).releaseDate;
 			}
 		}
+		System.out.println("Max release date in set = " + maxReleaseDate);
 		return maxReleaseDate;
 	}
 	
@@ -355,6 +504,7 @@ public class Comparator {
 				minReleaseDate = Movies.get(i).releaseDate;
 			}
 		}
+		System.out.println("Min release date in set = " + minReleaseDate);
 		return minReleaseDate;
 	}
 	
@@ -369,6 +519,7 @@ public class Comparator {
 				maxRevenue = Movies.get(i).revenue;
 			}
 		}
+		System.out.println("Max revenue in set = " + maxRevenue);
 		return maxRevenue;
 	}
 	
@@ -378,11 +529,12 @@ public class Comparator {
 		
 		for(int i=0; i<Movies.size(); i++)
 		{
-			if(minRevenue > Movies.get(i).revenue)
+			if(minRevenue > Movies.get(i).revenue && Movies.get(i).revenue > 0) //to avoid wrong results caused by no information about the feature value. Observed that some movies have revenue=0 which is not possible.
 			{
 				minRevenue = Movies.get(i).revenue;
 			}
 		}
+		System.out.println("Min revenue in set = " + minRevenue);
 		return minRevenue;
 	}
 	
@@ -397,6 +549,7 @@ public class Comparator {
 				maxRuntime = Movies.get(i).runtime;
 			}
 		}
+		System.out.println("Max runtime in set = " + maxRuntime);
 		return maxRuntime;
 	}
 	
@@ -411,6 +564,7 @@ public class Comparator {
 				minRuntime = Movies.get(i).runtime;
 			}
 		}
+		System.out.println("Min runtime in set = " + minRuntime);
 		return minRuntime;
 	}
 	
@@ -425,6 +579,7 @@ public class Comparator {
 				maxVoteAverage = Movies.get(i).voteAverage;
 			}
 		}
+		System.out.println("Max vote average in set = " + maxVoteAverage);
 		return maxVoteAverage;
 	}
 	
@@ -439,6 +594,7 @@ public class Comparator {
 				minVoteAverage = Movies.get(i).voteAverage;
 			}
 		}
+		System.out.println("Min vote average in set = " + minVoteAverage);
 		return minVoteAverage;
 	}
 	
@@ -453,6 +609,7 @@ public class Comparator {
 				maxVoteCount = Movies.get(i).voteCount;
 			}
 		}
+		System.out.println("Max vote count in set = " + maxVoteCount);
 		return maxVoteCount;
 	}
 	
@@ -467,42 +624,40 @@ public class Comparator {
 				minVoteCount = Movies.get(i).voteCount;
 			}
 		}
+		System.out.println("Min vote count in set = " + minVoteCount);
 		return minVoteCount;
 	}
 	
 	private double calculateNumbersSimilarity(double x, double y, double min, double max)
 	{
-		return (1 - (Math.abs(x - y)/(max - min)));
+		double similarity = 0;
+		
+		if(x == 0 || y == 0) //after observing the results I have noticed that for some movies budget or revenue were nor provided and the value is equal 0
+		{
+			similarity = 0.5; //then, having no info about those values, we have to assume that they are half similar
+		}
+		else
+		{
+			similarity = (1 - (Math.abs(x - y)/(max - min)));
+		}
+		return similarity;
 	}
 	
 	private double calculateTwoSetsSimilarity(int[] set1, int[] set2)
 	{
 		double similarityRate = 0;
 		
-		int maxPossibleMatches = 0;
-		int numberOfMathingElements = 0;
+		int numberOfMatchingElements = 0;
 		
 		if(set1 != null && set2 != null)
 		{
-			if(set1.length == set2.length)
-			{
-				maxPossibleMatches = set1.length;
-			}
-			else
-			{
-				if(set1.length > set2.length)
-				{
-					maxPossibleMatches = set2.length;
-				}
-				else
-				{
-					maxPossibleMatches = set1.length;
-				}
-			}
-			numberOfMathingElements = getNumberOfMatchingElements(set1, set2);
+			numberOfMatchingElements = getNumberOfMatchingElements(set1, set2);
+			similarityRate = (double)(numberOfMatchingElements * 2) / (set1.length + set2.length);
 		}
-		
-		similarityRate = numberOfMathingElements / maxPossibleMatches;
+		else
+		{
+			similarityRate = 0.5; //having no info about those values, we have to assume that they are half similar
+		}
 		
 		return similarityRate;
 	}
@@ -511,30 +666,17 @@ public class Comparator {
 	{
 		double similarityRate = 0;
 		
-		int maxPossibleMatches = 0;
-		int numberOfMathingElements = 0;
+		int numberOfMatchingElements = 0;
 		
 		if(set1 != null && set2 != null)
 		{
-			if(set1.length == set2.length)
-			{
-				maxPossibleMatches = set1.length;
-			}
-			else
-			{
-				if(set1.length > set2.length)
-				{
-					maxPossibleMatches = set2.length;
-				}
-				else
-				{
-					maxPossibleMatches = set1.length;
-				}
-			}
-			numberOfMathingElements = getNumberOfMatchingElements(set1, set2);
+			numberOfMatchingElements = getNumberOfMatchingElements(set1, set2);
+			similarityRate = (double)(numberOfMatchingElements * 2) / (set1.length + set2.length);
 		}
-		
-		similarityRate = numberOfMathingElements / maxPossibleMatches;
+		else
+		{
+			similarityRate = 0.5; //having no info about those values, we have to assume that they are half similar
+		}
 		
 		return similarityRate;
 	}
@@ -569,7 +711,7 @@ public class Comparator {
 			{
 				for(int j=0; j<set2.length; j++)
 				{
-					if(set1[i] == set2[j])
+					if(set1[i].equals(set2[j]))
 					{
 						numberOfMathingElements++;
 					}
@@ -577,5 +719,93 @@ public class Comparator {
 			}
 		}
 		return numberOfMathingElements;
+	}
+	
+	private void PrintSeparateFeatureResult(int movie1FeatureValue, int movie2FeatureValue, double similarityRate, String title)
+	{
+		System.out.println("************** " + title + " **************");
+		System.out.println("movie1  = " + movie1FeatureValue);
+		System.out.println("movie2  = " + movie2FeatureValue);
+		System.out.println("similarity rate = " + similarityRate);
+	}
+	
+	private void PrintSeparateFeatureResult(double movie1FeatureValue, double movie2FeatureValue, double similarityRate, String title)
+	{
+		System.out.println("************** " + title + " **************");
+		System.out.println("movie1  = " + movie1FeatureValue);
+		System.out.println("movie2  = " + movie2FeatureValue);
+		System.out.println("similarity rate = " + similarityRate);
+	}
+	
+	private void PrintSeparateFeatureResult(int[] movie1FeatureValues, int[] movie2FeatureValues, double similarityRate, String title)
+	{
+		System.out.println("************** " + title + " **************");
+		System.out.print("movie1 = ");
+		
+		if(movie1FeatureValues != null)
+		{
+			for(int i=0; i<movie1FeatureValues.length; i++)
+			{
+				System.out.print(movie1FeatureValues[i] + ",");
+			}
+		}
+		else
+		{
+			System.out.print("null");
+		}
+		
+		System.out.println("");
+		System.out.print("movie2 = ");
+		
+		if(movie2FeatureValues != null)
+		{
+			for(int i=0; i<movie2FeatureValues.length; i++)
+			{
+				System.out.print(movie2FeatureValues[i] + ",");
+			}
+		}
+		else
+		{
+			System.out.print("null");
+		}
+		
+		System.out.println("");
+		System.out.println("similarity rate = " + similarityRate);
+	}
+	
+	private void PrintSeparateFeatureResult(String[] movie1FeatureValues, String[] movie2FeatureValues, double similarityRate, String title)
+	{
+		System.out.println("************** " + title + " **************");
+		System.out.print("movie1 = ");
+		
+		if(movie1FeatureValues != null)
+		{
+			for(int i=0; i<movie1FeatureValues.length; i++)
+			{
+				System.out.print(movie1FeatureValues[i] + ",");
+			}
+		}
+		else
+		{
+			System.out.print("null");
+		}
+		
+		System.out.println("");
+		System.out.print("movie2 = ");
+		
+		if(movie2FeatureValues != null)
+		{
+			for(int i=0; i<movie2FeatureValues.length; i++)
+			{
+				System.out.print(movie2FeatureValues[i] + ",");
+			}
+		}
+		else
+		{
+			System.out.print("null");
+		}
+		
+		System.out.println("");
+		System.out.println("similarity rate = " + similarityRate);
 	}
 }

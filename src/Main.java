@@ -11,9 +11,7 @@ public class Main {
 		Utilities util = new Utilities();
 		ArrayList<Movie> Movies = util.GetMoviesFromFile(fileName);
 		
-		Comparator comparator = new Comparator(Movies.get(0), Movies.get(1), Movies);
-		comparator.GetSimilarityRateForBudget();
-		
-		System.out.println();
+		Comparator comparator = new Comparator(Movies.get(78), Movies.get(110), Movies); //comparing Kill Bill: Vol. 1 with Pulp Fiction
+		comparator.GetMoviesSimilarityRate();
 	}
 }
